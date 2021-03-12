@@ -50,10 +50,17 @@ const QVariantMap AUTHENTICATE_COMMAND_ARGUMENT = {
 const QVariantMap GET_CERTIFICATE_COMMAND_ARGUMENT = {{"type", "auth"},
                                                       {"origin", "https://dummy-origin"}};
 
-std::unique_ptr<GetCertificate> g_cached_GetCertificate = std::make_unique<GetCertificate>(
-    std::pair {CommandType::GET_CERTIFICATE, GET_CERTIFICATE_COMMAND_ARGUMENT});
-std::unique_ptr<Authenticate> g_cached_Authenticate = std::make_unique<Authenticate>(
-    std::pair {CommandType::AUTHENTICATE, AUTHENTICATE_COMMAND_ARGUMENT});
+// The following globals will be initialized with initGlobalPointers() in WebEidTests::init().
+std::unique_ptr<GetCertificate> g_cached_GetCertificate;
+std::unique_ptr<Authenticate> g_cached_Authenticate;
+
+void initGlobalPointers()
+{
+	g_cached_GetCertificate = std::make_unique<GetCertificate>(
+		std::pair {CommandType::GET_CERTIFICATE, GET_CERTIFICATE_COMMAND_ARGUMENT});
+	g_cached_Authenticate = std::make_unique<Authenticate>(
+		std::pair {CommandType::AUTHENTICATE, AUTHENTICATE_COMMAND_ARGUMENT});
+}
 
 CommandHandler::ptr getCommandHandler(const CommandWithArguments& cmd)
 {

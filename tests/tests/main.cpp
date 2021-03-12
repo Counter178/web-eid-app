@@ -77,6 +77,7 @@ void WebEidTests::initTestCase()
 void WebEidTests::init()
 {
     PcscMock::reset();
+	initGlobalPointers();
 }
 
 void WebEidTests::statusUpdate_withUnsupportedCard_hasExpectedStatus()
